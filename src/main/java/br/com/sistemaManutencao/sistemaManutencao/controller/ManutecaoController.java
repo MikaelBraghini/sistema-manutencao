@@ -45,8 +45,7 @@ public class ManutecaoController {
         if (result.hasErrors())
             return "form";
 
-            manutencaoRepository.save(manutencao);
-
+        manutencaoRepository.save(manutencao);
         return "redirect:/manutencao";
     }
 
@@ -65,29 +64,28 @@ public class ManutecaoController {
         if (result.hasErrors())
             return "form";
 
-            manutencaoRepository.save(manutencao);
-
+        manutencaoRepository.save(manutencao);
         return "redirect:/manutencao";
     }
 
     @GetMapping("delete/{id}")
-    public ModelAndView delete(@PathVariable Long id){
+    public ModelAndView delete(@PathVariable Long id) {
         var manutencao = manutencaoRepository.findById(id);
         if (manutencao.isPresent())
             return new ModelAndView("delete", Map.of("manutencao", manutencao.get()));
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("delete/{id}")
-    public String delete(Manutencao manutencao){
+    public String delete(Manutencao manutencao) {
         manutencaoRepository.delete(manutencao);
         return "redirect:/manutencao";
     }
 
     @PostMapping("/finish/{id}")
-    public String finish(@PathVariable Long id){
+    public String finish(@PathVariable Long id) {
         var optionalmanutencao = manutencaoRepository.findById(id);
-        if(optionalmanutencao.isPresent()){
+        if (optionalmanutencao.isPresent()) {
             var manutencao = optionalmanutencao.get();
             manutencao.setFinisheadAt(LocalDate.now());
             manutencaoRepository.save(manutencao);
